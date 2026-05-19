@@ -15,7 +15,7 @@ typedef struct {
 // 消費税計算の関数
 int Sumtax(int sum, Item item) {
     int res = 0;
-    if (item.tax == 1) {
+    if (item.tax == 0.08) {
         res = sum * 8 / 100;
     } else {
         res = sum * 10 / 100;
@@ -154,6 +154,9 @@ int main() {
         return 0;
     }
     // --- パート5: メインメニュー ---
+
+
+    /*
     int choice;
     while(1){
         printf("\n===============================\n");
@@ -179,6 +182,9 @@ int main() {
                 printf("無効な番号です。もう一度入力してください。\n");
         }
     }
+    */
+
+
     // --- パート6: レシート出力（元のコードより） ---
     Item item; // 単一の変数として定義
     int total = 0;
