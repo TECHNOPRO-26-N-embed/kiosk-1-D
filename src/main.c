@@ -112,6 +112,21 @@ int main() {
         return 1;
     }
     // ここで何か書き込む処理などを行う場合は記述してください
+    fgets(buffer, sizeof(buffer), fp_shop);
+    while (fgets(buffer, sizeof(buffer), fp_shop)) {
+        char *name = strtok(buffer, ",");
+        char *price= strtok(NULL, ",");
+        char *quantity = strtok(NULL, ",");
+        char *Total amount = strtok(NULL, ",");
+        char *tax = strtok(NULL, ",");
+        char *date = strtok(NULL, ",");
+        if (name && price && quantity && Total amount && tax && date) {
+            printf("名前": %s, "価格": %s, "数量": %s, "合計金額": %s, "税率": %s, "日付": %s\n", name, price, quantity, Total amount, tax, date);
+        
+                }
+    }
+    fclose(fp_shop);
+}
     fclose(fp_shop);
     // --- パート3: 一時ファイルテスト（元のコードより） ---
     FILE *tempFile = tmpfile();
@@ -200,4 +215,28 @@ int main() {
     printf("合計: %d円\n", total);
     printf("お釣り: %d円\n", change);
     return 0;
+
+
+    FILE *fp_shop = fopen("sales_data.csv", "w+"); // aからw+に変更されていた部分を統合
+    if(fp_shop == NULL){
+        printf("ファイルを開くことができませんでした。\n");
+        return 1;
+    }
+    // ここで何か書き込む処理などを行う場合は記述してください
+    
+    fgets(buffer, sizeof(buffer), fp_shop);
+    while (fgets(buffer, sizeof(buffer), fp_shop)) {
+        char *name = strtok(buffer, ",");
+        char *price= strtok(NULL, ",");
+        char *quantity = strtok(NULL, ",");
+        char *sales_amount = strtok(NULL, ",");
+        char *tax = strtok(NULL, ",");
+        char *date = strtok(NULL, ",");
+        if (name && price && quantity && sales_amount && tax && date) {
+            printf("名前: %s, 価格: %s, 数量: %s, 合計金額: %s, 税率: %s, 日付: %s\n", name, price, quantity, sales_amount, tax, date);
+        }
+    }
+    fclose(fp_shop);
 }
+}
+
