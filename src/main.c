@@ -194,6 +194,7 @@ int main() {
     scanf("%d", &payment);
     change = payment - total;
     printf("\n===================レシート===================\n");
+    printf("〇〇店\n");
     printf("%s %d円 * %d\n", item.item_name, item.price, quantity); // メンバー名をitem_nameに変更
     printf("---------------------------------------------\n");
     printf("合計: %d円\n", total);
