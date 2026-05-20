@@ -1,14 +1,26 @@
-// payment.c
 #include <stdio.h>
 #include "payment.h"
+#include "globals.h"
+#include "cart.h"
+#include "product.h"
 
-// 合計金額（本来はカート集計結果を返す）
-// 今はテスト用に固定値
+// カートの合計金額（税込）を返す
 int calculateTotalAmount(void) {
-    return 1500;  // 例：1500円
+    int total = 0;
+
+    for (int i = 0; i < g_cart.count; i++) {
+        Item item = g_cart.items[i];
+        int qty = g_cart.quantities[i];
+
+        // 税込価格 = 税抜価格 × (1 + 税率)
+        int priceWithTax = (int)(item.price * (1.0f + item.tax));
+
+        total += priceWithTax * qty;
+    }
+
+    return total;
 }
 
-// 投入金額を入力
 int inputCashAmount(void) {
     int cash;
     printf("投入金額を入力してください: ");
@@ -16,23 +28,24 @@ int inputCashAmount(void) {
     return cash;
 }
 
-// お釣り計算
 int calculateChange(int total, int cash) {
     return cash - total;
 }
 
-// 現金決済処理メイン
 void processCashPayment(void) {
     int total = calculateTotalAmount();
-    int cash = 0;
-    int change = 0;
+
+    if (total <= 0) {
+        printf("カートが空のため決済できません。\n");
+        return;
+    }
 
     printf("=== 現金決済 ===\n");
-    printf("合計金額: %d 円\n", total);
+    printf("合計金額(税込): %d 円\n", total);
 
+    int cash = 0;
     while (1) {
         cash = inputCashAmount();
-
         if (cash < total) {
             printf("投入金額が不足しています。あと %d 円必要です。\n", total - cash);
         } else {
@@ -40,7 +53,7 @@ void processCashPayment(void) {
         }
     }
 
-    change = calculateChange(total, cash);
+    int change = calculateChange(total, cash);
 
     printf("支払い完了しました。\n");
     printf("お預かり: %d 円\n", cash);

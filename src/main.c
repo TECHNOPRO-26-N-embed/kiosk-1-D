@@ -4,6 +4,7 @@
 #include "payment_menu.h"
 #include "payment.h"
 #include "log.h"
+#include "globals.h"   // ← 追加
 
 int main(void) {
 
@@ -32,11 +33,18 @@ int main(void) {
     }
     fclose(fp);
 
+    // globals に商品マスタをコピー
+    for (int i = 0; i < count; i++) {
+        g_items[i] = items[i];
+    }
+    g_itemCount = count;
+
     // ================================
     // カート初期化
     // ================================
     Cart cart;
     initCart(&cart);
+    g_cart = cart;  // globals に反映
 
     // ================================
     // メインループ
@@ -59,6 +67,7 @@ int main(void) {
 
             if (processProductSelection(items, count, &selectedIndex, &selectedQuantity)) {
                 addToCart(&cart, items[selectedIndex], selectedQuantity);
+                g_cart = cart;  // globals に反映
                 printf("\nカートに追加しました。\n");
             }
         }
@@ -76,6 +85,7 @@ int main(void) {
                 processCashPayment();
                 saveTransactionData();
                 clearCart(&cart);
+                g_cart = cart;  // globals に反映
             } else {
                 printf("この支払方法はまだ実装されていません。\n");
             }
