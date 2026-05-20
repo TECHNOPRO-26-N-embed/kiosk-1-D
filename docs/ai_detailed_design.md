@@ -13,6 +13,10 @@
 4. 処理完了後、メインメニューへ戻る
 
 
+void runMainLoop(void);
+int showMainMenu(void);
+
+
 ---
 
 ## 2. 個別機能アルゴリズム（更新済）
@@ -29,6 +33,26 @@
 6. 商品一覧画面へ戻る
 
 
+// 商品一覧を表示
+void displayProductList(void);
+
+// 商品IDの入力
+int inputProductId(void);
+
+// 商品IDが存在するかチェック
+// 戻り値: 1 = 存在する, 0 = 存在しない
+int isValidProductId(int productId);
+
+// 数量入力
+int inputQuantity(void);
+
+// カートに商品を追加
+// 戻り値: 0 = 成功, -1 = 失敗
+int addToCart(int productId, int quantity);
+
+// 商品選択処理のメイン関数
+void processProductSelection(void);
+
 ---
 
 ### ● 機能2：カート確認
@@ -42,6 +66,22 @@
    - 戻る → 前の画面へ
 
 
+// カート内容を表示
+void displayCart(void);
+
+// カート操作メニュー表示
+int showCartMenu(void);
+
+// カートから商品削除
+// 戻り値: 0 = 成功, -1 = 失敗
+int removeFromCart(int productId);
+
+// カート数量変更
+// 戻り値: 0 = 成功, -1 = 失敗
+int updateCartQuantity(int productId, int newQuantity);
+
+// カート確認処理メイン
+void processCartMenu(void);
 
 ---
 
@@ -54,6 +94,12 @@
 4. 戻る → カート画面へ
 
 
+// 決済方法メニュー表示
+int selectPaymentMethod(void);
+
+// 決済処理メイン
+void processPayment(void);
+
 ---
 
 ### ● 機能4：現金決済
@@ -65,6 +111,18 @@
 4. お釣りを計算
 5. 完了画面へ遷移
 
+
+// 合計金額計算
+int calculateTotalAmount(void);
+
+// 投入金額入力
+int inputCashAmount(void);
+
+// お釣り計算
+int calculateChange(int total, int cash);
+
+// 現金決済処理メイン
+void processCashPayment(void);
 
 
 ---
@@ -80,6 +138,23 @@
 6. 取引ログCSVへ追記
 7. 明細CSVへ追記
 
+// 取引ID生成
+long generateTransactionId(void);
+
+// 現在日時取得（文字列）
+void getCurrentDateTime(char *buffer, int size);
+
+// 税額計算
+int calculateTaxAmount(int price, int taxType);
+
+// 取引ログCSVへ保存
+int saveTransactionLog(long transactionId, const char *datetime, int totalAmount, int taxAmount, int paymentMethod);
+
+// カート明細CSVへ保存
+int saveCartDetails(long transactionId);
+
+// ログ保存メイン処理
+void saveTransactionData(void);
 
 ---
 
@@ -96,5 +171,17 @@
 
 ---
 
+## 4. 構造体
+typedef struct {
+    int id;
+    char name[64];
+    int price;
+    int taxType;
+} Product;
+
+typedef struct {
+    int productId;
+    int quantity;
+} CartItem;
 
 
