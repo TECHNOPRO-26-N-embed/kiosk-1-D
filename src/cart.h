@@ -13,5 +13,9 @@ void initCart(Cart *cart);
 int addToCart(Cart *cart, Item item, int quantity);
 void displayCart(const Cart *cart);
 void clearCart(Cart *cart);
+int removeFromCart(Cart *cart, int itemId);
+int updateQuantity(Cart *cart, int itemId, int newQty);
+int isCartEmpty(const Cart *cart);
+
 
 #endif
