@@ -64,11 +64,50 @@ int main(void) {
         }
 
         else if (choice == 2) {
-            // カート表示
             displayCart(&cart);
+
+            if (isCartEmpty(&cart)) {
+                printf("カートは空です。\n");
+                continue;
+            }
+
+            printf("\n1. 商品削除\n");
+            printf("2. 数量変更\n");
+            printf("0. 戻る\n");
+            printf("番号を入力: ");
+
+            int sub;
+            scanf("%d", &sub);
+
+            if (sub == 1) {
+                int id;
+                printf("削除する商品ID: ");
+                scanf("%d", &id);
+                if (removeFromCart(&cart, id))
+                    printf("削除しました。\n");
+                else
+                    printf("該当商品がありません。\n");
+            }
+            else if (sub == 2) {
+                int id, qty;
+                printf("数量変更する商品ID: ");
+                scanf("%d", &id);
+                printf("新しい数量: ");
+                scanf("%d", &qty);
+                if (updateQuantity(&cart, id, qty))
+                    printf("数量を変更しました。\n");
+                else
+                    printf("該当商品がありません。\n");
+            }
         }
 
+
         else if (choice == 3) {
+
+            if (isCartEmpty(&cart)) {
+                printf("カートが空です。決済できません。\n");
+                continue;
+            }
             // 支払方法選択
             int method = selectPaymentMethod();
 
